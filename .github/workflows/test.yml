@@ -33,6 +33,8 @@ jobs:
             which python
             which python3
             which python3.13
+            echo $PATH
+            python3 -c 'print("Hello world")'
       - name: Plan
         uses: gruntwork-io/terragrunt-action@v2
         env:
