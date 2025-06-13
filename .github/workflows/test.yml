@@ -37,9 +37,9 @@ jobs:
               pwd
               ls -al /github/workspace/
               tfplan_location=$(find . -name "sandbox.tfplan")
-              tfplan_contents=$(cat $tfplan_location)
+              tfplan_json=$(terraform show -json $tfplan_location)
               echo "-------- PLAN --------"
-              echo $tfplan_contents
+              echo $tfplan_json
               echo "------ END PLAN ------"
         with:
           tf_version: '1.5.5'
