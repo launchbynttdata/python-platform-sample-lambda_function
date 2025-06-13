@@ -41,7 +41,7 @@ jobs:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
           tg_dir: 'platform/sandbox/us-east-2/000'
-          tg_command: 'plan -out $(pwd)/test.tfplan'
+          tg_command: 'plan -out platform/sandbox/us-east-2/000/test.tfplan'
   deploy:
     runs-on: ubuntu-latest
     needs: [ plan ]
