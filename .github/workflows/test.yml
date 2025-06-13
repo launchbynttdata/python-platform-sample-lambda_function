@@ -31,10 +31,6 @@ jobs:
             AWS_REGION: ${{ vars.AWS_REGION }}
             INPUT_PRE_EXEC_0: |
               sudo apt update -yqq && sudo apt install python3 -yqq
-            INPUT_POST_EXEC_0: |
-              tfplan_location=$(find . -name "sandbox.tfplan" -exec realpath {} \;)
-              tfplan_json=$(terragrunt show -json $tfplan_location)
-              echo "TERRAFORM_PLAN=$tfplan_json" >> "$GITHUB_OUTPUT"
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
@@ -48,8 +44,6 @@ jobs:
           TERRAFORM_PLAN: ${{ steps.plan.outputs.TERRAFORM_PLAN }}
           INPUT_PRE_EXEC_0: |
             sudo apt update -yqq && sudo apt install python3 -yqq
-          INPUT_PRE_EXEC_1: |
-            echo $TERRAFORM_PLAN >> platform/sandbox/us-east-2/000/sandbox.tfplan
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
