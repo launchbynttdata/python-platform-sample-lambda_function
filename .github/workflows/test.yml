@@ -28,7 +28,7 @@ jobs:
         uses: gruntwork-io/terragrunt-action@v2
         env:
             AWS_REGION: ${{ vars.AWS_REGION }}
-            INPUT_PRE_EXEC_1: mise settings python.compile=1 && mise install -y python@3.13.1 && mise use -g python@3.13.1
+            INPUT_PRE_EXEC_1: mise settings python.compile 1 && mise settings && mise install -y python@3.13.1 && mise use -g python@3.13.1
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
