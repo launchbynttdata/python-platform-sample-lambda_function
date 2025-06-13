@@ -1,2 +1,4 @@
 **/backend.tf
 **/provider.tf
+.terragrunt-cache
+.terraform
