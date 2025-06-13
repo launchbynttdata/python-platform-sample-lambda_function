@@ -20,7 +20,8 @@ jobs:
 
       - name: "Validate Repository Secrets"
         run: |
-          [[ "${{ vars.DEPLOY_ROLE_ARN }}" -eq "" ]] echo "::error title=Repository Configuration Incomplete::This repository is missing a secret for DEPLOY_ROLE_ARN!"
+          test -z "${{ vars.DEPLOY_ROLE_ARN }}" && echo "::error title=Repository Configuration Incomplete::This repository is missing a secret for DEPLOY_ROLE_ARN!"
+          test -z "${{ vars.DEPLOY_ROLE_ARN2 }}" && echo "::error title=Repository Configuration Incomplete::This repository is missing a secret for DEPLOY_ROLE_ARN2!"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
