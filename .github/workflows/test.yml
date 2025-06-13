@@ -32,15 +32,16 @@ jobs:
               set -x ; sudo apt update -yqq && sudo apt install python3 -yqq
             INPUT_POST_EXEC_0: |
               pwd
+              ls -al .terragrunt-cache
               ls -al .
               echo "------------ PLAN ------------"
-              cat tg-plan.json
+              cat test.tfplan
               echo "---------- END PLAN ----------"
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
           tg_dir: 'platform/sandbox/us-east-2/000'
-          tg_command: 'plan -out tg-plan.json'
+          tg_command: 'plan -out $(pwd)/test.tfplan'
   deploy:
     runs-on: ubuntu-latest
     needs: [ plan ]
