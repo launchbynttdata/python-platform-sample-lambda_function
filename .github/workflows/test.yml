@@ -38,12 +38,13 @@ jobs:
               find . -name "sandbox.tfplan"
               echo "found!"
               tfplan_location=$(find . -name "sandbox.tfplan")
-              echo "TERRAFORM_PLAN=$(cat $tfplan_location)" >> "$GITHUB_OUTPUT"
+              tfplan_contents=$(cat $tfplan_location)
+              echo "TERRAFORM_PLAN=$tfplan_contents" >> $GITHUB_OUTPUT
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
           tg_dir: 'platform/sandbox/us-east-2/000'
-          tg_command: 'plan -out sandbox.tfplan'
+          tg_command: 'plan -out=sandbox.tfplan -input=false'
 
       - name: Deploy
         uses: gruntwork-io/terragrunt-action@v2
