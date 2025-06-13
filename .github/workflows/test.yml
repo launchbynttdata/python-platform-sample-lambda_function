@@ -45,7 +45,7 @@ jobs:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
           tg_dir: 'platform/sandbox/us-east-2/000'
-          tg_command: 'plan -out=sandbox.tfplan -input=false'
+          tg_command: 'plan -out=sandbox.tfplan -json'
 
       - name: Deploy
         uses: gruntwork-io/terragrunt-action@v2
