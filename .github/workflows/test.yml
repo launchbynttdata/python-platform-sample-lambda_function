@@ -32,15 +32,9 @@ jobs:
             INPUT_PRE_EXEC_0: |
               sudo apt update -yqq && sudo apt install python3 -yqq
             INPUT_POST_EXEC_0: |
-              set -x
-              env | sort | grep GITHUB
-              pwd
-              ls -al /github/workspace/
               tfplan_location=$(find . -name "sandbox.tfplan" -exec realpath {} \;)
               tfplan_json=$(terragrunt show -json $tfplan_location)
-              echo "-------- PLAN --------"
-              echo $tfplan_json
-              echo "------ END PLAN ------"
+              echo "TERRAFORM_PLAN=$tfplan_json" >> "$GITHUB_OUTPUT"
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
