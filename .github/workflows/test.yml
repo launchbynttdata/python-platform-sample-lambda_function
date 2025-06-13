@@ -28,6 +28,11 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Python3 Check
+        run: |
+            which python
+            which python3
+            which python3.13
       - name: Plan
         uses: gruntwork-io/terragrunt-action@v2
         env:
