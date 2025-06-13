@@ -36,8 +36,8 @@ jobs:
               env | sort | grep GITHUB
               pwd
               ls -al /github/workspace/
-              tfplan_location=$(find . -name "sandbox.tfplan")
-              tfplan_json=$(terraform show -json $tfplan_location)
+              tfplan_location=$(find . -name "sandbox.tfplan" -exec realpath {} \;)
+              tfplan_json=$(terragrunt run show -json $tfplan_location)
               echo "-------- PLAN --------"
               echo $tfplan_json
               echo "------ END PLAN ------"
@@ -45,7 +45,7 @@ jobs:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
           tg_dir: 'platform/sandbox/us-east-2/000'
-          tg_command: 'plan -out=sandbox.tfplan -json'
+          tg_command: 'plan -out=sandbox.tfplan'
 
       - name: Deploy
         uses: gruntwork-io/terragrunt-action@v2
