@@ -24,21 +24,11 @@ jobs:
           role-session-name: Test-AWS-GHA-OIDC
           aws-region: ${{ vars.AWS_REGION }}
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: Python3 Check
-        run: |
-            which python
-            which python3
-            which python3.13
-            echo $PATH
-            python3 -c 'print("Hello world")'
       - name: Plan
         uses: gruntwork-io/terragrunt-action@v2
         env:
             AWS_REGION: ${{ vars.AWS_REGION }}
+            INPUT_PRE_EXEC_1: mise install -y python@3.13.1 && mise use -g python@3.13.1
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
