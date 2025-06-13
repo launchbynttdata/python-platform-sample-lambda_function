@@ -1,0 +1,55 @@
+[project]
+name = "python-platform-sample-lambda-function"
+version = "0.0.0"
+description = "A sample Lambda function for demonstrating workflows"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.0",
+    "pytest-cov>=6.2.1",
+    "ruff>=0.11.13",
+]
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+minversion = "8.0"
+addopts = "-s -ra --cov=src --cov-fail-under=80 --cov-report term --cov-report html --cov-report xml:htmlcov/coverage.xml"
+testpaths = [
+    "test"
+]
+
+[tool.coverage.report]
+    skip_empty = true
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    ".venv",
+]
