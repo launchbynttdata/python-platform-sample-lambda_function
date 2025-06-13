@@ -50,11 +50,8 @@ jobs:
             sudo apt update -yqq && sudo apt install python3 -yqq
           INPUT_PRE_EXEC_1: |
             echo $TERRAFORM_PLAN >> platform/sandbox/us-east-2/000/sandbox.tfplan
-          INPUT_PRE_EXEC_2: |
-            echo "-------- PLAN --------"
-            cat platform/sandbox/us-east-2/000/sandbox.tfplan
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
           tg_dir: 'platform/sandbox/us-east-2/000'
-          tg_command: 'apply'
+          tg_command: 'apply sandbox.tfplan'
