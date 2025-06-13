@@ -27,7 +27,8 @@ jobs:
       - name: Plan
         uses: gruntwork-io/terragrunt-action@v2
         with:
-          tg_version: '1.5.5'
+          tf_version: '1.5.5'
+          tg_version: '0.54.11'
           tg_dir: 'platform/sandbox/us-east-2/000'
           tg_command: 'plan'
   deploy:
@@ -48,6 +49,7 @@ jobs:
       - name: Deploy
         uses: gruntwork-io/terragrunt-action@v2
         with:
-          tg_version: '1.5.5'
+          tf_version: '1.5.5'
+          tg_version: '0.54.11'
           tg_dir: 'platform/sandbox/us-east-2/000'
           tg_command: 'apply'
