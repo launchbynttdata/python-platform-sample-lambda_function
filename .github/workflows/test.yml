@@ -29,7 +29,7 @@ jobs:
         env:
             AWS_REGION: ${{ vars.AWS_REGION }}
             INPUT_PRE_EXEC_1: |
-              mise settings set python_compile 1; mise install -y python@3.13.1 && mise use -g python@3.13.1
+              sudo apt update -yqq && sudo apt install python3 -yqq
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
