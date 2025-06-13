@@ -10,8 +10,7 @@ locals {
 
   account_name = local.account_vars.locals.account_name
   region       = local.region_vars.locals.region
-  # AWS Profile name
-  
+
   relative_path      = path_relative_to_include()
   environment_instance = basename(local.relative_path)
   bucket          = "${replace(local.naming_prefix, "_", "-")}-${local.region}-${local.account_name}-${local.environment_instance}-tfstate"
@@ -24,13 +23,11 @@ generate "provider" {
   if_exists = "overwrite"
   contents  = <<EOF
 provider "aws" {
-  profile = "default"
   region  = "${local.region}"
 }
 
 provider "aws" {
   alias   = "global"
-  profile = "default"
   region  = "us-east-1"
 }
 EOF
@@ -44,7 +41,6 @@ remote_state {
     if_exists = "overwrite"
   }
   config = {
-    profile        = "default"
     bucket         = "${local.bucket}"
     key            = "terraform.tfstate"
     region         = "${local.region}"
@@ -56,6 +52,5 @@ remote_state {
 inputs = {
   naming_prefix = local.naming_prefix
   environment   = local.account_name
-  profile_name  = "default"
   region        = local.region
 }
