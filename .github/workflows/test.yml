@@ -38,7 +38,9 @@ jobs:
               ls -al /github/workspace/
               tfplan_location=$(find . -name "sandbox.tfplan")
               tfplan_contents=$(cat $tfplan_location)
-              echo "TERRAFORM_PLAN=$tfplan_contents" >> $GITHUB_OUTPUT
+              echo "-------- PLAN --------"
+              echo $tfplan_contents
+              echo "------ END PLAN ------"
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
@@ -55,6 +57,7 @@ jobs:
           INPUT_PRE_EXEC_1: |
             echo $TERRAFORM_PLAN >> platform/sandbox/us-east-2/000/sandbox.tfplan
           INPUT_PRE_EXEC_2: |
+            echo "-------- PLAN --------"
             cat platform/sandbox/us-east-2/000/sandbox.tfplan
         with:
           tf_version: '1.5.5'
