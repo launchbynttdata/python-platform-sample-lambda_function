@@ -10,7 +10,7 @@ permissions:
     contents: read
 
 jobs:
-  sandbox:
+  deploy:
     name: "Plan & Deploy Sandbox Environment"
     runs-on: ubuntu-latest
     environment: Sandbox
@@ -18,16 +18,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
 
-      - name: "Validate Repository Secrets"
+      - name: "Validate GitHub Environment"
         run: |
-          test -z "${{ vars.DEPLOY_ROLE_ARN }}" && echo "::error title=Repository Configuration Incomplete::This repository is missing a secret for DEPLOY_ROLE_ARN!"
-          test -z "${{ vars.DEPLOY_ROLE_ARN2 }}" && echo "::error title=Repository Configuration Incomplete::This repository is missing a secret for DEPLOY_ROLE_ARN2!"
+          raised=0
+          test -z "${{ vars.DEPLOY_ROLE_ARN }}" && (echo "::error title=Repository Configuration Incomplete::This repository is missing an environment variable for DEPLOY_ROLE_ARN!"; raised=1)
+          test -z "${{ vars.AWS_REGION }}" && (echo "::error title=Repository Configuration Incomplete::This repository is missing a secret for AWS_REGION!"; raised=1)
+          exit $raised
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: ${{ vars.DEPLOY_ROLE_ARN }}
-          role-session-name: ${{ github.repository }}|${{ github.event_name }}|${{github.ref}}
+          role-session-name: ${{ github.repository }}
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Plan
