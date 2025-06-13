@@ -37,7 +37,7 @@ jobs:
               pwd
               ls -al /github/workspace/
               tfplan_location=$(find . -name "sandbox.tfplan" -exec realpath {} \;)
-              tfplan_json=$(terragrunt run show -json $tfplan_location)
+              tfplan_json=$(terragrunt show -json $tfplan_location)
               echo "-------- PLAN --------"
               echo $tfplan_json
               echo "------ END PLAN ------"
