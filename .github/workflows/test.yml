@@ -34,6 +34,9 @@ jobs:
             INPUT_POST_EXEC_0: |
               pwd
               ls -al /github/workspace/
+              echo "find?"
+              find . -name "sandbox.tfplan"
+              echo "found!"
               tfplan_location=$(find . -name "sandbox.tfplan")
               echo "TERRAFORM_PLAN=$(cat $tfplan_location)" >> "$GITHUB_OUTPUT"
         with:
