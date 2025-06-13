@@ -57,7 +57,9 @@ jobs:
       - name: Deploy
         uses: gruntwork-io/terragrunt-action@v2
         env:
-            AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          INPUT_PRE_EXEC_1: |
+            sudo apt update -yqq && sudo apt install python3 -yqq
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
