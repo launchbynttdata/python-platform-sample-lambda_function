@@ -33,9 +33,10 @@ jobs:
             INPUT_POST_EXEC_0: |
               pwd
               ls -al /github/workspace/
-              echo "------------ PLAN ------------"
-              cat /github/workspace/test.tfplan
-              echo "---------- END PLAN ----------"
+              # echo "------------ PLAN ------------"
+              # cat /github/workspace/test.tfplan
+              # echo "---------- END PLAN ----------"
+              find / -name "test.tfplan"
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
