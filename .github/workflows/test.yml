@@ -21,9 +21,9 @@ jobs:
         - name: configure aws credentials
           uses: aws-actions/configure-aws-credentials@v1.7.0
           with:
-            role-to-assume: ${{ env.DEPLOY_ROLE_ARN }}
+            role-to-assume: ${{ vars.DEPLOY_ROLE_ARN }}
             role-session-name: Test-AWS-GHA-OIDC
-            aws-region: ${{ env.AWS_REGION }}
+            aws-region: ${{ vars.AWS_REGION }}
       
         - name: Sts GetCallerIdentity
           run: |
