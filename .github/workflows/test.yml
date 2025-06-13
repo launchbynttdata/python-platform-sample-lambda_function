@@ -3,29 +3,50 @@ name: Test AWS Connectivity
 on:
     pull_request:
         branches: [ main ]
-    push:
-        branches: [ main ]
 
 permissions:
     id-token: write
     contents: read
 
 jobs:
-  Test-AWS-Connectivity:
-    name: Test AWS Connectivity
+  plan:
     runs-on: ubuntu-latest
     environment: Sandbox
     steps:
-        - name: Git clone the repository
-          uses: actions/checkout@v3
-      
-        - name: configure aws credentials
-          uses: aws-actions/configure-aws-credentials@v1.7.0
-          with:
-            role-to-assume: ${{ vars.DEPLOY_ROLE_ARN }}
-            role-session-name: Test-AWS-GHA-OIDC
-            aws-region: ${{ vars.AWS_REGION }}
-      
-        - name: Sts GetCallerIdentity
-          run: |
-            aws sts get-caller-identity
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{ vars.DEPLOY_ROLE_ARN }}
+          role-session-name: Test-AWS-GHA-OIDC
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Plan
+        uses: gruntwork-io/terragrunt-action@v2
+        with:
+          tg_version: '1.5.5'
+          tg_dir: 'platform/sandbox/us-east-2/000'
+          tg_command: 'plan'
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ plan ]
+    environment: Sandbox
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{ vars.DEPLOY_ROLE_ARN }}
+          role-session-name: Test-AWS-GHA-OIDC
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy
+        uses: gruntwork-io/terragrunt-action@v2
+        with:
+          tg_version: '1.5.5'
+          tg_dir: 'platform/sandbox/us-east-2/000'
+          tg_command: 'apply'
