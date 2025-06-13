@@ -26,6 +26,8 @@ jobs:
 
       - name: Plan
         uses: gruntwork-io/terragrunt-action@v2
+        env:
+            AWS_REGION: ${{ vars.AWS_REGION }}
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
@@ -48,6 +50,8 @@ jobs:
 
       - name: Deploy
         uses: gruntwork-io/terragrunt-action@v2
+        env:
+            AWS_REGION: ${{ vars.AWS_REGION }}
         with:
           tf_version: '1.5.5'
           tg_version: '0.54.11'
