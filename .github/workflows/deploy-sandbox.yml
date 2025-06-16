@@ -11,6 +11,15 @@ permissions:
     contents: read
 
 jobs:
+    check-duplicate-runs:
+        runs-on: ubuntu-latest
+        outputs:
+          should_skip: ${{ steps.skip_check.outputs.should_skip }}
+        steps:
+          - id: skip_check
+            uses: fkirc/skip-duplicate-actions@04a1aebece824b56e6ad6a401d015479cd1c50b3
+            with:
+              skip_after_successful_duplicate: 'true'
     build-matrix:
         runs-on: ubuntu-latest
         outputs:
@@ -65,7 +74,8 @@ jobs:
                     f.write(f"matrix={json.dumps(matrix, separators=(',', ':'))}")
 
     call-terragrunt-deploy:
-        needs: build-matrix
+        needs: [check-duplicate-runs, build-matrix]
+        if: ${{ needs.check-duplicate-runs.outputs.should_skip != 'true' }}
         permissions:
             contents: read
             id-token: write
