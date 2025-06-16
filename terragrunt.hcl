@@ -24,12 +24,41 @@ generate "provider" {
   contents  = <<EOF
 provider "aws" {
   region  = "${local.region}"
+
+  default_tags {
+    tags = {
+      Organization = var.organization_tag
+      Repository = var.repository_tag
+      CommitHash = var.commit_hash_tag
+    }
+  }
 }
 
 provider "aws" {
   alias   = "global"
   region  = "us-east-1"
+
+  default_tags {
+    tags = {
+      Organization = var.organization_tag
+      Repository = var.repository_tag
+      CommitHash = var.commit_hash_tag
+    }
+  }
 }
+
+variable "organization_tag" {
+  type = string
+}
+
+variable "repository_tag" {
+  type = string
+}
+
+variable "commit_hash_tag" {
+  type = string
+}
+
 EOF
 }
 
