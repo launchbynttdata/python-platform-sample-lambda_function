@@ -18,6 +18,8 @@ jobs:
             - name: Build Environment Matrix
               id: build-matrix
               shell: python
+              env: 
+                PLATFORM_ENVIRONMENT: "sandbox"
               run: |
                 from pathlib import Path
                 import os
