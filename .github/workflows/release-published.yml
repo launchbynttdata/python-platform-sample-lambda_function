@@ -20,5 +20,5 @@ jobs:
             tg_version: '0.54.11'
             environment: sandbox
             region: us-east-2
-            env_id: 001
+            env_id: '001'
         secrets: inherit
