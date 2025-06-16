@@ -3,7 +3,7 @@ create         = true
 handler        = "app.alternate_lambda_handler"
 cors           = { allow_origins = ["*"] }
 source_path    = "../../../../../../../src/function/"
-name           = "platform-sample-lambda-function-2"
+name           = "platform_sample-uswest2-sandbox-001-fn-000"
 environment_variables = {
   PAYLOAD = "Failover-West"
 }
