@@ -1,0 +1,24 @@
+on:
+    release:
+      types:
+        - published
+
+name: Deploy to Production
+
+permissions:
+    contents: read
+
+
+jobs:
+    call-terragrunt-deploy:
+        permissions:
+            contents: read
+            id-token: write
+        uses: ./.github/workflows/terragrunt-deploy.yml
+        with:
+            tf_version: '1.5.5'
+            tg_version: '0.54.11'
+            environment: sandbox
+            region: us-east-2
+            env_id: 001
+        secrets: inherit
