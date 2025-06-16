@@ -48,6 +48,7 @@ jobs:
       - name: "Set default Terraform Tags"
         id: set-tags
         run: |
+            set -x
             echo "${{ github.repository }}" | cut -d "/" -f 2 > repo.txt
             echo "TF_VAR_organization_tag=${{ github.repository_owner }}" >> "$GITHUB_OUTPUT"
             echo "TF_VAR_repository_tag=$(cat repo.txt)" >> "$GITHUB_OUTPUT"
