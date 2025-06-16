@@ -81,7 +81,6 @@ jobs:
         uses: gruntwork-io/terragrunt-action@aee21a7df999be8b471c2a8564c6cd853cb674e1
         env:
             AWS_REGION: ${{ inputs.region }}
-            TERRAFORM_PLAN: ${{ steps.plan.outputs.TERRAFORM_PLAN }}
             INPUT_PRE_EXEC_0: |
               sudo apt update -yqq && sudo apt install python3 -yqq
             TF_VAR_organization_tag: ${{ steps.set-tags.outputs.TF_VAR_organization_tag }}
