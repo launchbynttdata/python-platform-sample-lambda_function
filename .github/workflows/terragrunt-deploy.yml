@@ -68,7 +68,7 @@ jobs:
               sudo apt update -yqq && sudo apt install python3 -yqq
             TF_VAR_organization_tag: ${{ vars.TF_VAR_organization_tag }}
             TF_VAR_repository_tag: ${{ vars.TF_VAR_repository_tag }}
-            TF_VAR_organizaTF_VAR_commit_hash_tagtion_tag: ${{ vars.TF_VAR_commit_hash_tag }}
+            TF_VAR_commit_hash_tag: ${{ vars.TF_VAR_commit_hash_tag }}
         with:
           tf_version: ${{ inputs.tf_version }}
           tg_version: ${{ inputs.tg_version }}
@@ -84,7 +84,7 @@ jobs:
               sudo apt update -yqq && sudo apt install python3 -yqq
             TF_VAR_organization_tag: ${{ vars.TF_VAR_organization_tag }}
             TF_VAR_repository_tag: ${{ vars.TF_VAR_repository_tag }}
-            TF_VAR_organizaTF_VAR_commit_hash_tagtion_tag: ${{ vars.TF_VAR_commit_hash_tag }}z
+            TF_VAR_commit_hash_tag: ${{ vars.TF_VAR_commit_hash_tag }}
         with:
           tf_version: ${{ inputs.tf_version }}
           tg_version: ${{ inputs.tg_version }}
