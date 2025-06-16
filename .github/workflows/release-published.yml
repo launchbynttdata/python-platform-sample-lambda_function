@@ -5,63 +5,13 @@ on:
 
 name: Deploy to Production
 
-permissions:
-  contents: read
-
-
 jobs:
   build-matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.build-matrix.outputs.matrix }}
-    steps:
-      - uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
-      - name: Build Environment Matrix
-        id: build-matrix
-        shell: python
-        env:
-          PLATFORM_ENVIRONMENT: "production"
-        run: |
-          from pathlib import Path
-          import os
-          import json
-
-          def discover_environments(platform_path: Path = Path("platform")) -> list[Path]:
-              return [d for d in platform_path.iterdir() if d.is_dir()]
-
-          def discover_regions(environment_path: Path) -> list[Path]:
-              return [d for d in environment_path.iterdir() if d.is_dir()]
-
-          def discover_instances(region_path: Path) -> list[Path]:
-              return [d for d in region_path.iterdir() if d.is_dir()]
-
-          try:
-              ENVIRONMENT = os.environ['PLATFORM_ENVIRONMENT']
-          except KeyError as ke:
-              raise ValueError("Environment variable named PLATFORM_ENVIRONMENT was not found. This variable must be supplied so that a matrix of environments can be built!")
-
-          if len(ENVIRONMENT) == 0:
-              raise ValueError("Environment variable PLATFORM_ENVIRONMENT was empty. This variable must be supplied so that a matrix of environments can be built!")
-
-          all_environments = discover_environments()
-          matrix = {"terragrunt_environment": []}
-          try:
-              selected_environment = list(filter(lambda x: x.name == ENVIRONMENT, all_environments))[0]
-          except Exception:
-              raise ValueError(f"Expected environment '{ENVIRONMENT}' not found in {all_environments}")
-
-          regions = discover_regions(environment_path=selected_environment)
-
-          for region_path in regions:
-              region_instances = discover_instances(region_path=region_path)
-              for instance in region_instances:
-                  matrix["terragrunt_environment"].append({"environment": selected_environment.name, "region": region_path.name, "instance": instance.name})
-
-          print("Generated the following environment matrix:")
-          print(json.dumps(matrix, indent=4))
-
-          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-              f.write(f"matrix={json.dumps(matrix, separators=(',', ':'))}")
+    permissions:
+      contents: read
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-github-matrix-tg.yml@0.1.3
+    with:
+      platform_environment: production
 
   call-terragrunt-deploy:
     needs: build-matrix
@@ -72,12 +22,11 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
 
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-deploy.yml@v0.1.0
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-deploy.yml@0.1.3
     with:
       tf_version: '1.5.5'
       tg_version: '0.54.11'
       environment: ${{ matrix.terragrunt_environment.environment }}
       region: ${{ matrix.terragrunt_environment.region }}
       env_id: ${{ matrix.terragrunt_environment.instance }}
-
     secrets: inherit
