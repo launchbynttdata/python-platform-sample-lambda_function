@@ -58,6 +58,9 @@ jobs:
                     for instance in region_instances:
                         matrix["terragrunt_environment"].append({"environment": selected_environment.name, "region": region_path.name, "instance": instance.name})
 
+                print("Generated the following environment matrix:")
+                print(json.dumps(matrix, indent=4))
+
                 with open(os.environ["GITHUB_OUTPUT"], "a") as f:
                     f.write(f"matrix={json.dumps(matrix, separators=(',', ':'))}")
 
