@@ -15,6 +15,7 @@ jobs:
         outputs:
             matrix: ${{ steps.build-matrix.outputs.matrix }}
         steps:
+            - uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
             - name: Build Environment Matrix
               id: build-matrix
               shell: python
