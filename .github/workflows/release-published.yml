@@ -19,7 +19,7 @@ jobs:
       platform_environment: production
 
   call-terragrunt-deploy:
-    needs: build-matrix
+    needs: [get-tg-versions, build-matrix]
     permissions:
       contents: read
       id-token: write
