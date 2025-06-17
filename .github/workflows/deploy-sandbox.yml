@@ -8,7 +8,7 @@ jobs:
   get-tg-versions:
     permissions:
       contents: read
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-versions.yml@0.1.45
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-versions.yml@0.1.5
 
   build-matrix:
     permissions:
