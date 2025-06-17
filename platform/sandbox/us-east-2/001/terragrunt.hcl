@@ -2,6 +2,10 @@ include "root" {
   path = find_in_parent_folders()
 }
 
+locals {
+  git_tag = "1.0.3"
+}
+
 terraform {
-  source = "git::https://github.com/launchbynttdata/tf-aws-module_primitive-lambda_function//.?ref=1.0.3"
+  source = "tfr://terraform.registry.launch.nttdata.com/module_primitive/lambda_function/aws?version=${local.git_tag}"
 }
