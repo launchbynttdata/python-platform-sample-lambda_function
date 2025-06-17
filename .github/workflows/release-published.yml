@@ -6,10 +6,15 @@ on:
 name: Deploy to Production
 
 jobs:
+  get-tg-versions:
+    permissions:
+      contents: read
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-versions.yml@0.1.4
+
   build-matrix:
     permissions:
       contents: read
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-github-matrix-tg.yml@0.1.3
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-github-matrix-tg.yml@0.1.4
     with:
       platform_environment: production
 
@@ -22,7 +27,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
 
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-deploy.yml@0.1.3
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-deploy.yml@0.1.4
     with:
       tf_version: '1.5.5'
       tg_version: '0.54.11'
