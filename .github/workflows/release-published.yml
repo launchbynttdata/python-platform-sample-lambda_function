@@ -29,8 +29,8 @@ jobs:
 
     uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-deploy.yml@0.1.7
     with:
-      tf_version: '1.5.5'
-      tg_version: '0.54.11'
+      tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
+      tg_version: ${{ needs.get-tg-versions.outputs.tg_version }}
       environment: ${{ matrix.terragrunt_environment.environment }}
       region: ${{ matrix.terragrunt_environment.region }}
       env_id: ${{ matrix.terragrunt_environment.instance }}
