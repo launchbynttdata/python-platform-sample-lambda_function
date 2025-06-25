@@ -7,4 +7,3 @@ name           = "platform_sample-useast1-production-000-fn-000"
 environment_variables = {
   PAYLOAD = "Primary"
 }
-

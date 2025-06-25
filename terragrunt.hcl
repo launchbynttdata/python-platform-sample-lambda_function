@@ -1,13 +1,13 @@
 
 locals {
-  naming_prefix = "sample_lambda"
-  relative_path      = path_relative_to_include()
-  path_parts         = split("/", local.relative_path)
-  account_name       = local.path_parts[1]
-  region             = local.path_parts[2]
+  naming_prefix        = "sample_lambda"
+  relative_path        = path_relative_to_include()
+  path_parts           = split("/", local.relative_path)
+  account_name         = local.path_parts[1]
+  region               = local.path_parts[2]
   environment_instance = basename(local.relative_path)
-  bucket          = "${replace(local.naming_prefix, "_", "-")}-${local.region}-${local.account_name}-${local.environment_instance}-tfstate"
-  dynamodb_table  = "${local.naming_prefix}-${local.region}-${local.account_name}-${local.environment_instance}-tflocks"
+  bucket               = "${replace(local.naming_prefix, "_", "-")}-${local.region}-${local.account_name}-${local.environment_instance}-tfstate"
+  dynamodb_table       = "${local.naming_prefix}-${local.region}-${local.account_name}-${local.environment_instance}-tflocks"
 }
 
 # Generate the AWS provider settings

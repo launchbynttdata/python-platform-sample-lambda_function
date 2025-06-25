@@ -15,6 +15,17 @@ permissions:
   pull-requests: write
 
 jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
+      - name: Set up Python 3.13
+        uses: astral-sh/setup-uv@7bbb36f4345bf059635fb6d04d0fb369ca42338e
+        with:
+          python-version: 3.13
+      - uses: launchbynttdata/actions-asdf-install_tools@v0
+      - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd
+
   run-tests:
     runs-on: ubuntu-latest
     strategy:
@@ -29,9 +40,6 @@ jobs:
       uses: astral-sh/setup-uv@7bbb36f4345bf059635fb6d04d0fb369ca42338e
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Ruff check
-      run: |
-            uvx ruff check
     - name: Install dependencies
       run: |
         uv sync
