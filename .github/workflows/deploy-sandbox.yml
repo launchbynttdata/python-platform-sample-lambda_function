@@ -26,7 +26,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
 
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-deploy.yml@0.1.7
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-deploy.yml@patch/alternate-gh-environment-var
     with:
       tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
       tg_version: ${{ needs.get-tg-versions.outputs.tg_version }}
