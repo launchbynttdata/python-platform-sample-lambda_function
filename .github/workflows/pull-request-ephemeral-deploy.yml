@@ -1,0 +1,38 @@
+name: Deploy Ephemeral Sandbox Environment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ "**" ]
+
+jobs:
+  get-tg-versions:
+    permissions:
+      contents: read
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-versions.yml@0.1.7
+
+  build-matrix:
+    permissions:
+      contents: read
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-github-matrix-tg.yml@0.1.7
+    with:
+      platform_environment: sandbox
+
+  call-terragrunt-deploy:
+    needs: [get-tg-versions, build-matrix]
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-deploy-ephemeral.yml@feature/tg-deploy-without-gh-environment
+    with:
+      git_branch: ${{ github.head_ref }}
+      assume_role_arn: "arn:aws:iam::020127659860:role/github-actions-deploy-role"
+      tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
+      tg_version: ${{ needs.get-tg-versions.outputs.tg_version }}
+      region: ${{ matrix.terragrunt_environment.region }}
+      env_id: ${{ matrix.terragrunt_environment.instance }}
+    secrets: inherit

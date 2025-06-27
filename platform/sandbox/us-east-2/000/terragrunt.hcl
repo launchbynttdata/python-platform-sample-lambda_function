@@ -3,9 +3,9 @@ include "root" {
 }
 
 locals {
-  git_tag = "1.0.3"
+  git_tag = "1.0.0"
 }
 
 terraform {
-  source = "tfr://terraform.registry.launch.nttdata.com/module_primitive/lambda_function/aws?version=${local.git_tag}"
+  source = "tfr://terraform.registry.launch.nttdata.com/module_reference/lambda_function/aws?version=${local.git_tag}"
 }

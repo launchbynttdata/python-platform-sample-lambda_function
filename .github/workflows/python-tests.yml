@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.13'
-      - uses: launchbynttdata/actions-asdf-install_tools@feature/exclude-tools
+      - uses: launchbynttdata/actions-asdf-install_tools@v0.2.0
         with:
           exclude_tools: "python"
       - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd

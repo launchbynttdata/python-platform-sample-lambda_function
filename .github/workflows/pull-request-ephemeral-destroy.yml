@@ -2,6 +2,7 @@ name: Deploy Sandbox Environment
 
 on:
   pull_request:
+    types: [closed]
     branches: [ "**" ]
 
 jobs:
@@ -26,11 +27,12 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
 
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-deploy.yml@0.1.7
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-destroy-ephemeral.yml@feature/tg-deploy-without-gh-environment
     with:
+      git_branch: ${{ github.head_ref }}
+      assume_role_arn: "arn:aws:iam::020127659860:role/github-actions-deploy-role"
       tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
       tg_version: ${{ needs.get-tg-versions.outputs.tg_version }}
-      environment: ${{ matrix.terragrunt_environment.environment }}
       region: ${{ matrix.terragrunt_environment.region }}
       env_id: ${{ matrix.terragrunt_environment.instance }}
     secrets: inherit
