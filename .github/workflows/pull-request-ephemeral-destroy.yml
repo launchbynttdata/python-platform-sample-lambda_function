@@ -29,6 +29,7 @@ jobs:
 
     uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-destroy-ephemeral.yml@feature/tg-deploy-without-gh-environment
     with:
+      branch_name: ${{ github.head_ref }}
       assume_role_arn: "arn:aws:iam::020127659860:role/github-actions-deploy-role"
       tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
       tg_version: ${{ needs.get-tg-versions.outputs.tg_version }}
