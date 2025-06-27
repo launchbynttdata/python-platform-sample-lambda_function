@@ -18,7 +18,7 @@ locals {
   bucket                   = "${local.name_dash}-${local.region}-${local.name_hash}-tfstate"
   dynamodb_table           = "${local.name_dash}-${local.region}-${local.name_hash}-tflocks"
   repo_name                = basename(abspath("${get_path_to_repo_root()}"))
-  state_filename_ephemeral = "${local.account_name}/${coalesce(local.git_branch, local.current_user)}/${local.environment_instance}/terraform.tfstate"
+  state_filename_ephemeral = "${local.account_name}/${coalesce(local.git_branch, local.current_use, "/")}/${local.environment_instance}/terraform.tfstate"
   state_filename_persist   = "${local.account_name}/${local.environment_instance}/terraform.tfstate"
 }
 
