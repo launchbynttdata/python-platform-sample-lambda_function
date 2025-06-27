@@ -1,4 +1,4 @@
-name: Deploy Sandbox Environment
+name: Deploy Ephemeral Sandbox Environment
 
 on:
   pull_request:

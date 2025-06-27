@@ -19,7 +19,7 @@ locals {
   dynamodb_table           = "${local.name_dash}-${local.region}-${local.name_hash}-tflocks"
   repo_name                = basename(abspath("${get_path_to_repo_root()}"))
   state_filename_ephemeral = "${local.account_name}/${coalesce(local.git_branch, local.current_user)}/${local.environment_instance}/terraform.tfstate"
-  state_filename_persist   = "${local.account_name}/${coalesce(local.git_branch, local.current_user)}/${local.environment_instance}/terraform.tfstate"
+  state_filename_persist   = "${local.account_name}/${local.environment_instance}/terraform.tfstate"
 }
 
 # Generate the AWS provider settings
@@ -34,6 +34,7 @@ provider "aws" {
     tags = {
       Organization = var.organization_tag
       Repository = coalesce(var.repository_tag, "${basename(abspath(dirname(find_in_parent_folders("terragrunt.hcl"))))}")
+      Branch = var.branch_tag
       CommitHash = var.commit_hash_tag
     }
   }
@@ -47,6 +48,7 @@ provider "aws" {
     tags = {
       Organization = var.organization_tag
       Repository = coalesce(var.repository_tag, "${basename(abspath(dirname(find_in_parent_folders("terragrunt.hcl"))))}")
+      Branch = var.branch_tag
       CommitHash = var.commit_hash_tag
     }
   }
@@ -60,6 +62,11 @@ variable "organization_tag" {
 variable "repository_tag" {
   type = string
   default = ""
+}
+
+variable "branch_tag" {
+  type = string
+  default = "RUN OUTSIDE PIPELINE"
 }
 
 variable "commit_hash_tag" {
