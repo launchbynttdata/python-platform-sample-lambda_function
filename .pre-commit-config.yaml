@@ -1,0 +1,43 @@
+repos:
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: ac44eab0cf35cf4268a18f1e7c20e0980550d6fa # 0.7.15
+    hooks:
+      - id: uv-lock
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b # v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-yaml
+        args:
+          - --allow-multiple-documents
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args:
+          - --fix=auto
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: 8a948e557ca98afa9489998ad0b85515964df9c4 # v0.12.0
+    hooks:
+      - id: ruff-check
+        types_or: [python, pyi]
+        args: [--fix]
+      - id: ruff-format
+        types_or: [python, pyi]
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: 708a9d4a964376a7be931b7721d315ef1d2db31d # v1.1.402
+    hooks:
+      - id: pyright
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: 2f8bda194a420ad77a050a9de627d77a74841fdc # v1.99.4
+    hooks:
+      - id: terragrunt_fmt
+      - id: terragrunt_validate_inputs
+        exclude: "^[^/]+$"
+        args:
+          - --env-vars=TF_VAR_organization_tag="THIS_ORGANIZATION"
+          - --env-vars=TF_VAR_repository_tag="THIS_REPOSITORY"
+          - --env-vars=TF_VAR_commit_hash_tag="THIS_COMMIT_HASH"
