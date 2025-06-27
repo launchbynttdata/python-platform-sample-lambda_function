@@ -1,7 +1,7 @@
 
 locals {
   # After initial apply, changes to these naming values will result in the creation of new state bucket(s) and dynamodb table(s)!
-  logical_product_family = "sample"
+  logical_product_family  = "sample"
   logical_product_service = "lambda"
 
   # Don't modify the locals below this line.
