@@ -32,6 +32,7 @@ jobs:
       git_branch: ${{ github.head_ref }}
       tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
       tg_version: ${{ needs.get-tg-versions.outputs.tg_version }}
+      environment: ${{ matrix.terragrunt_environment.environment }}
       region: ${{ matrix.terragrunt_environment.region }}
       env_id: ${{ matrix.terragrunt_environment.instance }}
     secrets: inherit
