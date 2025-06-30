@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
 
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-plan-only.yml@feature/plan-only-workflow
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-plan-only.yml@0.3.0
     with:
       git_branch: ${{ github.head_ref }}
       tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
