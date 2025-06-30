@@ -32,6 +32,7 @@ jobs:
       git_branch: ${{ github.head_ref }}
       tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
       tg_version: ${{ needs.get-tg-versions.outputs.tg_version }}
+      assume_role_arn: "arn:aws:iam::159247424670:role/github-actions-deploy-role"
       environment: ${{ matrix.terragrunt_environment.environment }}
       region: ${{ matrix.terragrunt_environment.region }}
       env_id: ${{ matrix.terragrunt_environment.instance }}
