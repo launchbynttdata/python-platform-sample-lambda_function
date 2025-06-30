@@ -1,0 +1,39 @@
+name: Plan Production Environment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ "**" ]
+
+jobs:
+  get-tg-versions:
+    permissions:
+      contents: read
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-versions.yml@0.2.0
+
+  build-matrix:
+    permissions:
+      contents: read
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-github-matrix-tg.yml@0.2.0
+    with:
+      platform_environment: production
+
+  call-terragrunt-plan:
+    needs: [get-tg-versions, build-matrix]
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-plan-only.yml@0.3.0
+    with:
+      git_branch: ${{ github.head_ref }}
+      tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
+      tg_version: ${{ needs.get-tg-versions.outputs.tg_version }}
+      assume_role_arn: "arn:aws:iam::159247424670:role/github-actions-deploy-role"
+      environment: ${{ matrix.terragrunt_environment.environment }}
+      region: ${{ matrix.terragrunt_environment.region }}
+      env_id: ${{ matrix.terragrunt_environment.instance }}
+    secrets: inherit
