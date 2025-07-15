@@ -9,12 +9,12 @@ jobs:
   get-tg-versions:
     permissions:
       contents: read
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-versions.yml@0.2.0
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-versions.yml@0.4.0
 
   build-matrix:
     permissions:
       contents: read
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-github-matrix-tg.yml@0.2.0
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-github-matrix-tg.yml@0.4.0
     with:
       platform_environment: production
 
@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
 
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-plan-only.yml@0.3.0
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-plan-only.yml@0.4.0
     with:
       git_branch: ${{ github.head_ref }}
       tf_version: ${{ needs.get-tg-versions.outputs.tf_version }}
