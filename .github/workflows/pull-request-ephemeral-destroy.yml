@@ -9,12 +9,12 @@ jobs:
   get-tg-versions:
     permissions:
       contents: read
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-versions.yml@0.6.0
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-versions.yml@0.7.0
 
   build-matrix:
     permissions:
       contents: read
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-github-matrix-tg.yml@0.6.0
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-github-matrix-tg.yml@0.7.0
     with:
       platform_environment: sandbox
 
@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
 
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-destroy-ephemeral.yml@0.6.0
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-destroy-ephemeral.yml@0.7.0
     with:
       git_branch: ${{ github.head_ref }}
       assume_role_arn: "arn:aws:iam::020127659860:role/github-actions-deploy-role"
