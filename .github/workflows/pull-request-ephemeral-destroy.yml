@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
 
-    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-destroy-ephemeral.yml@0.8.0
+    uses: launchbynttdata/launch-workflows/.github/workflows/reusable-terragrunt-destroy-ephemeral.yml@fix/ephemeral-deploys
     with:
       git_branch: ${{ github.head_ref }}
       assume_role_arn: "arn:aws:iam::020127659860:role/github-actions-deploy-role"
