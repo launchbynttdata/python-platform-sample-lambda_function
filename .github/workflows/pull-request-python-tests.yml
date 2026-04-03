@@ -34,7 +34,7 @@ jobs:
     steps:
     - uses: actions/checkout@8edcb1bdb4e267140fa742c62e395cd74f332709
     - name: Set up Python ${{ matrix.python-version }}
-      uses: astral-sh/setup-uv@85856786d1ce8acfbcc2f13a5f3fbd6b938f9f41
+      uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
